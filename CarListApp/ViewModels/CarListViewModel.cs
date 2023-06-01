@@ -1,28 +1,18 @@
 ﻿using CarListApp.Models;
-using CarListApp.Services;
 using CarListApp.Views;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarListApp.ViewModels
 {
     public partial class CarListViewModel : BaseViewModel
     {
-        private readonly CarService carService;
         public ObservableCollection<Car> Cars { get; private set; } = new();
 
-
-        public CarListViewModel(CarService carService)
+        public CarListViewModel()
         {
             Title = "Car list";
-            this.carService = carService;
         }
 
         [RelayCommand]
@@ -41,7 +31,7 @@ namespace CarListApp.ViewModels
                     Cars.Clear();
                 }
 
-                var cars = carService.GetCars();
+                var cars = App.CarService.GetCars();
                 foreach (var car in cars)
                 {
                     Cars.Add(car);

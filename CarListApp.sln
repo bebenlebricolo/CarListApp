@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarListApp", "CarListApp\CarListApp.csproj", "{7AFA0370-E728-47B5-A4C6-CAC28A3240C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarListApi", "CarListApi\CarListApi.csproj", "{C86D7B4A-307E-4F6B-94F7-BEF3A26F09D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,10 @@ Global
 		{7AFA0370-E728-47B5-A4C6-CAC28A3240C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AFA0370-E728-47B5-A4C6-CAC28A3240C7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7AFA0370-E728-47B5-A4C6-CAC28A3240C7}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{C86D7B4A-307E-4F6B-94F7-BEF3A26F09D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C86D7B4A-307E-4F6B-94F7-BEF3A26F09D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C86D7B4A-307E-4F6B-94F7-BEF3A26F09D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C86D7B4A-307E-4F6B-94F7-BEF3A26F09D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

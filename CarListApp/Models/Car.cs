@@ -1,17 +1,16 @@
-﻿
+﻿using SQLite;
 
 namespace CarListApp.Models
 {
+    [Table("cars")]
     public class Car : BaseEntity
     {
         public string Make { get; set; }
+        
         public string Model { get; set; }
-        public string Vin { get; set; }
 
-        public string Repr()
-        {
-            return $"{Make} {Model}";
-        }
+        [MaxLength(12), Unique]
+        public string Vin { get; set; }
     }
 
     public class CarMart : BaseEntity

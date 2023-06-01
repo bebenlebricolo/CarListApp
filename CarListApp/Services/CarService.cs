@@ -1,4 +1,5 @@
 ﻿using CarListApp.Models;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,17 +10,39 @@ namespace CarListApp.Services
 {
     public class CarService
     {
+        private SQLiteConnection conn;
+        private string dbPath;
+        public string StatusMessage = "";
+
+        public CarService(string dbPath)
+        {
+            this.dbPath = dbPath;
+        }
+
+        private void Init()
+        {
+            if(conn is not null)
+            {
+                return;
+            }
+
+            conn = new SQLiteConnection(dbPath);
+            conn.CreateTable<Car>();
+        }
+
         public List<Car> GetCars()
         {
-            return new List<Car>()
+            try
             {
-                new Car { Id = 0, Make = "Renault" , Model = "4L", Vin = "123"},
-                new Car { Id = 1, Make = "Renault" , Model = "Espace", Vin = "123"},
-                new Car { Id = 2, Make = "Renault" , Model = "Clio", Vin = "123"},
-                new Car { Id = 3, Make = "Citroen" , Model = "2 Chevaux", Vin = "123"},
-                new Car { Id = 4, Make = "Citroen" , Model = "DS", Vin = "123"},
-                new Car { Id = 5, Make = "Peugeot" , Model = "205", Vin = "123"},
-            };
+                Init();
+                return conn.Table<Car>().ToList();
+            }
+            catch (Exception)
+            {
+                StatusMessage = "Failed to retrieve data from database.";
+            }
+
+            return new List<Car>();
         }
     }
 }
