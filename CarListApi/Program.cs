@@ -1,4 +1,8 @@
 
+using CarListApi.Services;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
+
 namespace CarListApi
 {
     public class Program
@@ -12,7 +16,23 @@ namespace CarListApi
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(c =>
+                {
+                    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                    {
+                        Version = "v1",
+                        Title = " ",
+                        Description = "Test api for Car List application client project"
+                    });
+            });
+            builder.Services.AddCors(o =>
+            {
+                o.AddPolicy("AllowAll", a => a.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
+            });
+
+            var dbPath = Path.Join(Directory.GetCurrentDirectory(), "carlist.db");
+            var conn = new SqliteConnection($"Data Source={dbPath}");
+            builder.Services.AddDbContext<CarListDbContext>(o => o.UseSqlite(conn));
 
             var app = builder.Build();
 
@@ -23,6 +43,7 @@ namespace CarListApi
                 app.UseSwaggerUI();
             }
 
+            app.UseCors("AllowAll");
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
