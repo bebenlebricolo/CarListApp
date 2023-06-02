@@ -71,7 +71,7 @@ namespace CarListApi.Controllers
                 if (record is null)
                 {
                     // Insert new car in database
-                    var updatedRecord = await _carListDbContext.Cars.AddAsync(car);
+                    var updatedRecord = await _carListDbContext.AddAsync(car);
                     if (updatedRecord is null) 
                     {
                         throw new Exception("Uh oh ! Could not create new entry in DB !");
@@ -93,5 +93,30 @@ namespace CarListApi.Controllers
                 return StatusCode(500, "Failed to retrieve data");
             }
         }
+
+        [HttpDelete("cars/{id}")]
+        public async Task<IActionResult> Delete([FromQuery] int id)
+        {
+            try
+            {
+                var record = await _carListDbContext.Cars.FirstOrDefaultAsync(i => i.Id == id);
+                if (record is null)
+                {
+                    return Ok("Nothing to do, no entry for this id.");
+                }
+                else
+                {
+                    _carListDbContext.Remove(record);
+                }
+
+                await _carListDbContext.SaveChangesAsync();
+                return Ok($"Successfully deleted car record from database");
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Failed to delete data");
+            }
+        }
+
     }
 }

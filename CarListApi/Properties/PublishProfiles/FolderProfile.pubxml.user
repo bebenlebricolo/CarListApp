@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>C:\inetpub\wwwroot\carlistapi</_PublishTargetUrl>
+    <History>True|2023-06-02T08:49:21.5715839Z;False|2023-06-02T15:48:59.8997361+07:00;True|2023-06-02T15:36:52.1394901+07:00;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+</Project>

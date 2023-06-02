@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="C:\Users\benoi\AppData\Roaming\CarListApi\carlist.db" Link="carlist.db" />
+    <None Include="C:\Users\benoi\AppData\Roaming\CarListApi\carlist.db-shm" Link="carlist.db-shm" />
+    <None Include="C:\Users\benoi\AppData\Roaming\CarListApi\carlist.db-wal" Link="carlist.db-wal" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.5" />
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.5" />

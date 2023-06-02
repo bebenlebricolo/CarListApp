@@ -24,24 +24,24 @@ namespace CarListApi
                         Title = " ",
                         Description = "Test api for Car List application client project"
                     });
-            });
+                });
             builder.Services.AddCors(o =>
             {
                 o.AddPolicy("AllowAll", a => a.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
             });
 
-            var dbPath = Path.Join(Directory.GetCurrentDirectory(), "carlist.db");
+            var appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var dbPath = Path.Combine("C:\\CarListApi\\", "carlist.db");
             var conn = new SqliteConnection($"Data Source={dbPath}");
             builder.Services.AddDbContext<CarListDbContext>(o => o.UseSqlite(conn));
 
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+
+            // Swagger enable for everyone 
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             app.UseCors("AllowAll");
             app.UseHttpsRedirection();
