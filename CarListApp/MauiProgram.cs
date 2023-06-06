@@ -20,7 +20,7 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-        string dbPath = Path.Combine(FileSystem.AppDataDirectory, "CarListApp", "cars.db3");
+        string dbPath = Path.GetFullPath("C:\\CarListApi\\carlist.db");
 
         // ViewModels
         builder.Services.AddTransient<CarListViewModel>();
@@ -28,7 +28,8 @@ public static class MauiProgram
         builder.Services.AddTransient<Car>();
 
         // Services
-        builder.Services.AddSingleton(s => ActivatorUtilities.CreateInstance<CarService>(s, dbPath));
+        builder.Services.AddTransient<CarApiService>();
+        builder.Services.AddTransient(s => ActivatorUtilities.CreateInstance<CarDatabaseService>(s, dbPath));
 
         // Pages
         builder.Services.AddSingleton<MainPage>();
