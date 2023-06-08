@@ -2,10 +2,13 @@ using CarListApi.Models;
 using CarListApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Google.Apis.Auth;
+using Google.Apis.CloudIdentity.v1;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CarListApi.Controllers
 {
-    [ApiController]
+    [ApiController, Authorize]
     [Route("[controller]")]
     [ProducesResponseType(200)]
     [ProducesResponseType(500)]
@@ -26,6 +29,16 @@ namespace CarListApi.Controllers
         [HttpGet("cars")]
         public async Task<IActionResult> GetAll()
         {
+
+            var baseClientInitializer = new Google.Apis.Services.BaseClientService.Initializer
+            {
+                ApiKey = Environment.GetEnvironmentVariable("CarListApiKey"),
+                ApplicationName = "CarListApi"
+            };
+            var service = new Google.Apis.CloudIdentity.v1.CloudIdentityService(baseClientInitializer);
+            //service.
+
+
             try
             {
                 var cars = await _carListDbContext.Cars.ToListAsync<Car>();

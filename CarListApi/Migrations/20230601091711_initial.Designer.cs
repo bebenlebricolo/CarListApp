@@ -11,7 +11,7 @@ namespace CarListApi.Migrations
 {
     [DbContext(typeof(CarListDbContext))]
     [Migration("20230601091711_initial")]
-    partial class initial
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

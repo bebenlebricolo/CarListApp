@@ -48,7 +48,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Images\confused_1.jpg" />
+    <None Remove="Resources\Images\cute_turtle_opens_door.jpg" />
+    <None Remove="Resources\Images\happy_2.jpg" />
+    <None Remove="Resources\Images\jungle_landscape.jpg" />
+    <None Remove="Resources\Images\sad_3.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
+    <PackageReference Include="Google.Apis.CloudIdentity.v1" Version="1.60.0.3071" />
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="7.0.5" />
@@ -63,6 +72,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <MauiXaml Update="LoadingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="LoginPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Views\CarDetailsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>

@@ -23,9 +23,11 @@ public static class MauiProgram
         string dbPath = Path.GetFullPath("C:\\CarListApi\\carlist.db");
 
         // ViewModels
+        builder.Services.AddTransient<Car>();
         builder.Services.AddTransient<CarListViewModel>();
         builder.Services.AddTransient<CarDetailsViewModel>();
-        builder.Services.AddTransient<Car>();
+        builder.Services.AddSingleton<LoadingPageViewModel>();
+        builder.Services.AddSingleton<LoginPageViewModel>();
 
         // Services
         builder.Services.AddTransient<CarApiService>();
@@ -33,6 +35,8 @@ public static class MauiProgram
 
         // Pages
         builder.Services.AddSingleton<MainPage>();
+        builder.Services.AddSingleton<LoadingPage>();
+        builder.Services.AddSingleton<LoginPage>();
         builder.Services.AddTransient<CarDetailsPage>();
 
 #if DEBUG
