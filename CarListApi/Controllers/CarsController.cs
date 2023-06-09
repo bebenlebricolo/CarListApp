@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace CarListApi.Controllers
 {
     [ApiController, Authorize]
-    [Route("[controller]")]
+    //[Route("[controller]")]
     [ProducesResponseType(200)]
     [ProducesResponseType(500)]
     [ProducesResponseType(404)]
@@ -35,10 +35,9 @@ namespace CarListApi.Controllers
                 ApiKey = Environment.GetEnvironmentVariable("CarListApiKey"),
                 ApplicationName = "CarListApi"
             };
-            var service = new Google.Apis.CloudIdentity.v1.CloudIdentityService(baseClientInitializer);
+            
+            //var service = new Google.Apis.CloudIdentity.v1.CloudIdentityService(baseClientInitializer);
             //service.
-
-
             try
             {
                 var cars = await _carListDbContext.Cars.ToListAsync<Car>();

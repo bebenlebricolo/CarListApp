@@ -30,16 +30,16 @@ namespace CarListApp.ViewModels
 
         [ObservableProperty]
         string make;
-        
+
         [ObservableProperty]
         string model;
-        
+
         [ObservableProperty]
         string vin;
-        
+
         [ObservableProperty]
         string addEditButtonText;
-        
+
         [ObservableProperty]
         int carId;
 
@@ -56,16 +56,15 @@ namespace CarListApp.ViewModels
                 }
 
                 var cars = new List<Car>();
-                /* if (accessType == NetworkAccess.Internet)
-                 {
-                     cars = await carApiService.GetCars();
-                 }
-                 else
-                 {
-                     cars = App.CarDatabaseService.GetCars();
-                 }*/
+                if (accessType == NetworkAccess.Internet)
+                {
+                    cars = await carApiService.GetCars();
+                }
+                else
+                {
+                    cars = App.CarDatabaseService.GetCars();
+                }
 
-                cars = App.CarDatabaseService.GetCars();
                 // Reject this as a silent error
                 if (cars is null)
                 {
@@ -76,7 +75,7 @@ namespace CarListApp.ViewModels
                 {
                     Cars.Add(car);
                 }
-                    
+
             }
             catch (Exception ex)
             {
@@ -117,7 +116,7 @@ namespace CarListApp.ViewModels
 
             if (CarId != 0)
             {
-                if (false/*accessType == NetworkAccess.Internet*/)
+                if (accessType == NetworkAccess.Internet)
                 {
                     await carApiService.UpdateCar(CarId, car);
                     message = carApiService.StatusMessage;
@@ -130,7 +129,7 @@ namespace CarListApp.ViewModels
             }
             else
             {
-                if (false /*accessType == NetworkAccess.Internet*/)
+                if (accessType == NetworkAccess.Internet)
                 {
                     await carApiService.AddCar(car);
                     message = carApiService.StatusMessage;
@@ -156,7 +155,7 @@ namespace CarListApp.ViewModels
                 return;
             }
 
-            if (false/*accessType == NetworkAccess.Internet*/)
+            if (accessType == NetworkAccess.Internet)
             {
                 await carApiService.DeleteCar(id);
                 message = carApiService.StatusMessage;
@@ -183,7 +182,7 @@ namespace CarListApp.ViewModels
             AddEditButtonText = editButtonText;
             CarId = id;
             Car car;
-            if (false /*accessType == NetworkAccess.Internet*/)
+            if (accessType == NetworkAccess.Internet)
             {
                 car = await carApiService.GetCar(CarId);
             }

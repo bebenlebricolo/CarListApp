@@ -1,6 +1,9 @@
 ﻿using CarListApp.Models;
 using System.Net.Http.Json;
 using Newtonsoft.Json;
+using CarListApp.ViewModels;
+using System.Net.Http.Headers;
+using System.Diagnostics;
 
 namespace CarListApp.Services
 {
@@ -18,7 +21,7 @@ namespace CarListApp.Services
         private string GetBaseAdress()
         {
             #if DEBUG
-                return DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:8099" : "http://localhost:8099";
+                return DeviceInfo.Platform == DevicePlatform.Android ? "https://10.0.2.2:8099" : "https://localhost:8099";
             #elif RELEASE
                 // published address here
                 return "https://carlistappapi20221121135717.azurewebsites.net";
@@ -29,8 +32,8 @@ namespace CarListApp.Services
         {
             try
             {
-                //await SetAuthToken();
-                var response = await _httpClient.GetStringAsync("/cars");
+                await SetAuthToken();
+                var response = await _httpClient.GetStringAsync("cars");
                 return JsonConvert.DeserializeObject<List<Car>>(response);
             }
             catch (Exception)
@@ -45,7 +48,8 @@ namespace CarListApp.Services
         {
             try
             {
-                var response = await _httpClient.GetStringAsync("/cars/" + id);
+                await SetAuthToken();
+                var response = await _httpClient.GetStringAsync("cars/" + id);
                 return JsonConvert.DeserializeObject<Car>(response);
             }
             catch (Exception)
@@ -60,7 +64,8 @@ namespace CarListApp.Services
         {
             try
             {
-                var response = await _httpClient.PostAsJsonAsync("/cars/", car);
+                await SetAuthToken();
+                var response = await _httpClient.PostAsJsonAsync("cars/", car);
                 response.EnsureSuccessStatusCode();
                 StatusMessage = "Insert Successful";
             }
@@ -74,8 +79,8 @@ namespace CarListApp.Services
         {
             try
             {
-
-                var response = await _httpClient.DeleteAsync("/cars/" + id);
+                await SetAuthToken();
+                var response = await _httpClient.DeleteAsync("cars/" + id);
                 response.EnsureSuccessStatusCode();
                 StatusMessage = "Delete Successful";
             }
@@ -89,7 +94,8 @@ namespace CarListApp.Services
         {
             try
             {
-                var response = await _httpClient.PutAsJsonAsync("/cars/" + id, car);
+                await SetAuthToken();
+                var response = await _httpClient.PutAsJsonAsync("cars/" + id, car);
                 response.EnsureSuccessStatusCode();
                 StatusMessage = "Update Successful";
             }
@@ -97,6 +103,29 @@ namespace CarListApp.Services
             {
                 StatusMessage = "Failed to update data.";
             }
+        }
+
+        public async Task<AuthResponseModel> Login(LoginModel loginModel)
+        {
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync("login", loginModel);
+                response.EnsureSuccessStatusCode();
+                StatusMessage = "Login successful";
+                return JsonConvert.DeserializeObject<AuthResponseModel>(await response.Content.ReadAsStringAsync());
+            }
+            catch(Exception ex)
+            {
+                Debug.Print(ex.Message);
+                StatusMessage = "Failed to login.";
+            }
+            return default;
+        }
+
+        public async Task SetAuthToken()
+        {
+            var token = await SecureStorage.GetAsync("AccessToken");
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
 
     }

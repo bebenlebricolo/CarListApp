@@ -14,7 +14,7 @@ using System.IdentityModel.Tokens.Jwt;
 namespace CarListApi.Controllers
 {
     [ApiController, AllowAnonymous]
-    [Route("[controller]")]
+    //[Route("[controller]")]
     [ProducesResponseType(200)]
     [ProducesResponseType(500)]
     [ProducesResponseType(404)]

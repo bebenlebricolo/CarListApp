@@ -17,17 +17,20 @@
         <VerticalStackLayout Spacing="0" Padding="0,0" VerticalOptions="Start" TranslationY="-100">
             <Frame CornerRadius="100" 
                BorderColor="Transparent"
-               HeightRequest="200"
-               WidthRequest="200"
+               HeightRequest="150"
+               WidthRequest="150"
                IsClippedToBounds="True" 
-               Margin="5"
-               BackgroundColor="White">
-                <Image Source="cute_turtle_opens_door.jpg" Aspect="AspectFill" WidthRequest="200" HeightRequest="200" x:Name="TurtleImageWidget"/>
+               Margin="0"
+               BackgroundColor="Transparent">
+                <Image Source="cute_turtle_opens_door.jpg" 
+                       Scale="1.5"
+                       Aspect="AspectFill"
+                       x:Name="TurtleImageWidget"/>
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LoginPageViewModel}}, Path=LoginCommand}"/>
                 </Frame.GestureRecognizers>
             </Frame>
-            <VerticalStackLayout Padding="10" Margin="0,0,0,30" VerticalOptions="Center">
+            <VerticalStackLayout Padding="10" Margin="0,15,0,40" VerticalOptions="Center">
                 <Label  Text="Welcome!" FontSize="28" TextColor="Gray" HorizontalTextAlignment="Center"/>
                 <Label  Text="Login to your account" FontSize="18" TextColor="Gray" HorizontalTextAlignment="Center"/>
                 <Label  Text="Gently tap on the turtle to start login" FontSize="10" TextColor="Gray" HorizontalTextAlignment="Center"/>
@@ -35,10 +38,10 @@
 
             <Border HorizontalOptions="Center" Stroke="#12ab94" Padding="15" StrokeThickness="1">
                 <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="20"/>
+                    <RoundRectangle CornerRadius="15"/>
                 </Border.StrokeShape>
-                <Grid ColumnDefinitions="*, *" RowDefinitions="*,*" HorizontalOptions="Center" ColumnSpacing="10" WidthRequest="200">
-                    <Entry x:Name="Username" Placeholder="Enter username" Text="{Binding Username}" Grid.Row="0" Grid.Column="1"/>
+                <Grid ColumnDefinitions="Auto, *" RowDefinitions="*,*" HorizontalOptions="Center" ColumnSpacing="10" WidthRequest="250">
+                    <Entry x:Name="Username" Placeholder="Enter username" Text="{Binding Username}" Grid.Row="0" Grid.Column="1" IsTextPredictionEnabled="True"/>
                     <Label Text="Username : " Grid.Row="0" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center"/>
                     <Entry x:Name="Password" Placeholder="Enter password" IsPassword="True" Text="{Binding Password}" Grid.Row="1" Grid.Column="1"/>
                     <Label Text="Password: " Grid.Row="1" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center"/>
