@@ -20,7 +20,6 @@ namespace CarListApi.Controllers
     [ProducesResponseType(404)]
     public class AuthenticationController: ControllerBase
     {
-
         //private readonly ILogger<AuthenticationController> _logger;
         private readonly IConfiguration _config;
 
@@ -58,8 +57,16 @@ namespace CarListApi.Controllers
             }.Union(claims)
             .Union(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
-            var durationInMinutes = Convert.ToInt32(_config.GetValue<string>("JwtSettings:DurationInMinutes")!);
-            var expirationDate = DateTime.UtcNow.AddMinutes(durationInMinutes);
+            var MaxAllowedTokenDurationMinutes = Convert.ToUInt32(_config.GetValue<string>("JwtSettings:DurationInMinutes")!);
+
+            // Clamp requested duration to maximum allowed uuration, to avoid token abuse.
+            var requestedDuration = loginDto.TokenLifespanRequestMinutes;
+            if ( requestedDuration > MaxAllowedTokenDurationMinutes)
+            {
+                requestedDuration = MaxAllowedTokenDurationMinutes;
+            }
+
+            var expirationDate = DateTime.UtcNow.AddMinutes(requestedDuration);
 
             var securityToken = new JwtSecurityToken(
                 issuer: _config.GetValue<string>("JwtSettings:Issuer")!,

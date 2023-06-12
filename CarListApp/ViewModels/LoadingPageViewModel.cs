@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using CarListApp.Helpers;
 using CarListApp.Models;
+using CarListApp.Views;
 
 namespace CarListApp.ViewModels
 {
@@ -36,7 +37,8 @@ namespace CarListApp.ViewModels
             {
                 // Build a menu on the fly ... based on the user role
                 var userInfo = new UserInfo(jwt.Claims.FirstOrDefault(q => q.Type.Equals(ClaimTypes.Email))?.Value,
-                                            jwt.Claims.FirstOrDefault(q => q.Type.Equals(ClaimTypes.Role))?.Value);
+                                            jwt.Claims.FirstOrDefault(q => q.Type.Equals(ClaimTypes.Role))?.Value,
+                                            App.UserInfo != null ? App.UserInfo.Password : string.Empty);
                 App.UserInfo = userInfo;
 
 

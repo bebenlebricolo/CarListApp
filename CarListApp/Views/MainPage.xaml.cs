@@ -1,7 +1,6 @@
-﻿
-using CarListApp.ViewModels;
+﻿using CarListApp.ViewModels;
 
-namespace CarListApp;
+namespace CarListApp.Views;
 
 public partial class MainPage : ContentPage
 {
@@ -19,5 +18,6 @@ public partial class MainPage : ContentPage
         base.OnAppearing();
         await carListViewModel.GetCarList();
     }
+
 }
 

@@ -191,9 +191,9 @@ namespace CarListApp.ViewModels
                 car = App.CarDatabaseService.GetCar(CarId);
             }
 
-            Make = car.Make;
-            Model = car.Model;
-            Vin = car.Vin;
+            Make = car.Make ?? string.Empty;
+            Model = car.Model ?? string.Empty;
+            Vin = car.Vin ?? string.Empty;
         }
 
         [RelayCommand]

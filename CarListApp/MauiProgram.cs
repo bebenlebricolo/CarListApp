@@ -28,6 +28,7 @@ public static class MauiProgram
         builder.Services.AddTransient<CarDetailsViewModel>();
         builder.Services.AddSingleton<LoadingPageViewModel>();
         builder.Services.AddSingleton<LoginPageViewModel>();
+        builder.Services.AddSingleton<LogoutPageViewModel>();
 
         // Services
         builder.Services.AddTransient<CarApiService>();
@@ -37,6 +38,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<MainPage>();
         builder.Services.AddSingleton<LoadingPage>();
         builder.Services.AddSingleton<LoginPage>();
+        builder.Services.AddSingleton<LogoutPage>();
         builder.Services.AddTransient<CarDetailsPage>();
 
 #if DEBUG

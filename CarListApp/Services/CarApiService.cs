@@ -4,6 +4,8 @@ using Newtonsoft.Json;
 using CarListApp.ViewModels;
 using System.Net.Http.Headers;
 using System.Diagnostics;
+using static Google.Apis.Requests.BatchRequest;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace CarListApp.Services
 {
@@ -15,7 +17,13 @@ namespace CarListApp.Services
         public CarApiService()
         {
             var baseAddress = GetBaseAdress();
+#if DEBUG
+            HttpClientHandler insecureHandler = GetInsecureHandler();
+            _httpClient = new HttpClient(insecureHandler) { BaseAddress = new Uri(baseAddress) };
+#else
             _httpClient = new() { BaseAddress = new Uri(baseAddress) };
+#endif
+
         }
 
         private string GetBaseAdress()
@@ -125,8 +133,37 @@ namespace CarListApp.Services
         public async Task SetAuthToken()
         {
             var token = await SecureStorage.GetAsync("AccessToken");
+            
+            var handler = new JwtSecurityTokenHandler();
+            var jwt = handler.ReadJwtToken(token);
+            
+            // Check if token still valid, if expired, then renew credentials
+            if(jwt.ValidTo < DateTime.UtcNow)
+            {
+                var loginModel = new LoginModel(App.UserInfo.Username, App.UserInfo.Password, 1);
+                
+                var authResponse = await Login(loginModel);
+                token = authResponse.AccessToken;
+                await SecureStorage.SetAsync("AccessToken", token);
+            }
+
+
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
 
+
+        // This method must be in a class in a platform project, even if
+        // the HttpClient object is constructed in a shared project.
+        public HttpClientHandler GetInsecureHandler()
+        {
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) =>
+            {
+                if (cert.Issuer.Equals("CN=localhost"))
+                    return true;
+                return errors == System.Net.Security.SslPolicyErrors.None;
+            };
+            return handler;
+        }
     }
 }

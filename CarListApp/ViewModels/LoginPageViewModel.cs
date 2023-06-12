@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using CarListApp.Views;
 
 namespace CarListApp.ViewModels
 {
@@ -36,7 +37,7 @@ namespace CarListApp.ViewModels
             else
             {
                 // Call API to attempt a login$
-                var loginModel = new LoginModel(Username, Password);
+                var loginModel = new LoginModel(Username, Password, 1);
                 var response = await _carApiService.Login(loginModel);
 
                 if (response is not null && !string.IsNullOrEmpty(response.AccessToken))
@@ -51,12 +52,13 @@ namespace CarListApp.ViewModels
                     await Shell.Current.DisplayAlert("Login status", _carApiService.StatusMessage, "Ok");
 
                     // Build a menu on the fly ... based on the user role
-                    var userInfo = new UserInfo(Username, jwt.Claims.FirstOrDefault(q => q.Type.Equals(ClaimTypes.Role))?.Value);
+                    var userInfo = new UserInfo(Username, jwt.Claims.FirstOrDefault(q => q.Type.Equals(ClaimTypes.Role))?.Value, Password);
                     App.UserInfo = userInfo;
 
                     // Navigate to app's main page
                     MenuBuilder.BuildMenu();
-                    await Shell.Current.GoToAsync(nameof(MainPage));
+                    var route = nameof(MainPage);
+                    await Shell.Current.GoToAsync(route);
 
                 }
                 else
@@ -66,8 +68,6 @@ namespace CarListApp.ViewModels
                     Password = "";
                 }
             }
-
-            return;
         }
     }
 }
