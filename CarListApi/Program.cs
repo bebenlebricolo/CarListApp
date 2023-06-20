@@ -64,7 +64,7 @@ namespace CarListApi
             var appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             var dbPath = Path.Combine("C:\\CarListApi\\", "carlist.db");
 #else
-            var dbPath = Path.Combine("/var/db/CarListApp", "carlist.db");
+            var dbPath = Path.Combine("/var/db/CarListApi", "carlist.db");
 #endif
             var conn = new SqliteConnection($"Data Source={dbPath}");
             builder.Services.AddDbContext<CarListDbContext>(o => o.UseSqlite(conn));

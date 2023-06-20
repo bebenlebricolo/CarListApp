@@ -20,18 +20,29 @@ namespace CarListApi.Controllers
     [ProducesResponseType(404)]
     public class AuthenticationController: ControllerBase
     {
-        //private readonly ILogger<AuthenticationController> _logger;
+        private readonly ILogger<AuthenticationController> _logger;
         private readonly IConfiguration _config;
 
-        public AuthenticationController(IConfiguration config)
+        public AuthenticationController(IConfiguration config, ILogger<AuthenticationController> logger)
         {
             _config = config; 
+            _logger = logger;
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto loginDto, UserManager<IdentityUser> userManager)
         {
-            var user = await userManager.FindByNameAsync(loginDto.UserName);
+            IdentityUser? user;
+            try
+            {
+                user = await userManager.FindByNameAsync(loginDto.UserName);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError($"Whoops ! Something wrong happened with the DB ! {ex.Message}");
+                return Problem("Caught internal error.");
+            }
+
             if (user == null) 
             {
                 return Unauthorized();
