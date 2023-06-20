@@ -60,8 +60,12 @@ namespace CarListApi
                 o.AddPolicy("AllowAll", a => a.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
             });
 
+#if WINDOWS
             var appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             var dbPath = Path.Combine("C:\\CarListApi\\", "carlist.db");
+#else
+            var dbPath = Path.Combine("/var/db/CarListApp", "carlist.db");
+#endif
             var conn = new SqliteConnection($"Data Source={dbPath}");
             builder.Services.AddDbContext<CarListDbContext>(o => o.UseSqlite(conn));
 
@@ -98,7 +102,7 @@ namespace CarListApi
 
             // Configure the HTTP request pipeline.
 
-            // Swagger enable for everyone 
+            // Swagger enable for everyone
             app.UseSwagger();
             app.UseSwaggerUI();
 
