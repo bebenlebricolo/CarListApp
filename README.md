@@ -2,6 +2,7 @@
 CarListApp as per developped following Udemy training + personnal touch
 
 # Getting started with the CarListApi
+![Screenshot](Screenshots/SwaggerIndexPage.png)
 
 ## Database (SQLite) deployment
 This REST api uses .Net core 7+ and connects to a local database [carlist.db](carlist.db), which needs to be deployed at :
